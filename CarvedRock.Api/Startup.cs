@@ -30,9 +30,12 @@ namespace CarvedRock.Api
                 options.UseSqlServer(_config["ConnectionStrings:CarvedRock"]));
             services.AddScoped<ProductRepository>();
 
-            services.AddScoped<IDependencyResolver>(s => new FuncDependencyResolver(s.GetRequiredService));
+            services.AddScoped<IDependencyResolver>(s => 
+                new FuncDependencyResolver(s.GetRequiredService));
+
             services.AddScoped<CarvedRockSchema>();
 
+            // AddGraphTypes scans assembly for all GraphTypes and registers them automatically
             services.AddGraphQL(o => { o.ExposeExceptions = false; })
                 .AddGraphTypes(ServiceLifetime.Scoped);
         }
