@@ -2,6 +2,7 @@
 using CarvedRock.Api.Repositories;
 using GraphQL.DataLoader;
 using GraphQL.Types;
+using System.Security.Claims;
 
 namespace CarvedRock.Api.GraphQL.Types
 {
@@ -24,6 +25,9 @@ namespace CarvedRock.Api.GraphQL.Types
                 "reviews",
                 resolve: context =>
                 {
+                    // Get the user and then you can do all kinds of authorization (e.g. check for an admin role claim)
+                    var user = (ClaimsPrincipal)context.UserContext;
+
                     // Use dictionary to cache data (int, ProductReview)
                     var loader = dataLoaderContextAccessor.Context.GetOrAddCollectionBatchLoader<int, ProductReview>(
                         "GetReviewsByProductId", reviewRepository.GetForProducts);

@@ -36,13 +36,18 @@ namespace CarvedRock.Api
 
             services.AddScoped<CarvedRockSchema>();
 
-            // AddGraphTypes scans assembly for all GraphTypes and registers them automatically
-            // AddDataLoader: the first time reviews are needed for specific product, the reviews for all products are fetched.
-            //  These are stored in cache owned by data loader
-            //  For the next products, these will be fetched from the cache
+
+
             services.AddGraphQL(o => { o.ExposeExceptions = false; })
+                // AddGraphTypes scans assembly for all GraphTypes and registers them automatically
                 .AddGraphTypes(ServiceLifetime.Scoped)
+                // To get the claims principal object - which represents the user in ASPNETCORE use AddUserContextBuilder
+                // Whenever user context is needed somewhere in graphtype, this lambda will be executed
+                .AddUserContextBuilder(context => context.User)
                 .AddDataLoader();
+                // AddDataLoader: the first time reviews are needed for specific product, the reviews for all products are fetched.
+                //  These are stored in cache owned by data loader
+                //  For the next products, these will be fetched from the cache
         }
 
         public void Configure(IApplicationBuilder app, CarvedRockDbContext dbContext)
