@@ -1,5 +1,6 @@
 ﻿using CarvedRock.Api.GraphQL.Types;
 using CarvedRock.Api.Repositories;
+using GraphQL;
 using GraphQL.Types;
 
 namespace CarvedRock.Api.GraphQL
@@ -41,6 +42,7 @@ namespace CarvedRock.Api.GraphQL
                 { Name = "id" }),
                 resolve: context =>
                 {
+                    //context.Errors.Add(new ExecutionError("Some error message"));
                     var id = context.GetArgument<int>("id");
                     return productRepository.GetOne(id);
                 }
