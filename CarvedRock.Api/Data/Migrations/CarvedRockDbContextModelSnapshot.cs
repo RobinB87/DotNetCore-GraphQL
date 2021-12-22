@@ -25,11 +25,13 @@ namespace CarvedRock.Api.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
                     b.Property<DateTimeOffset>("IntroducedAt");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(100);
 
                     b.Property<string>("PhotoFileName")
@@ -57,9 +59,10 @@ namespace CarvedRock.Api.Data.Migrations
 
                     b.Property<int>("ProductId");
 
-                    b.Property<int>("Review");
+                    b.Property<string>("Review");
 
-                    b.Property<int>("Title")
+                    b.Property<string>("Title")
+                        .IsRequired()
                         .HasMaxLength(200);
 
                     b.HasKey("Id");
@@ -72,7 +75,7 @@ namespace CarvedRock.Api.Data.Migrations
             modelBuilder.Entity("CarvedRock.Api.Data.Entities.ProductReview", b =>
                 {
                     b.HasOne("CarvedRock.Api.Data.Entities.Product", "Product")
-                        .WithMany()
+                        .WithMany("ProductReviews")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

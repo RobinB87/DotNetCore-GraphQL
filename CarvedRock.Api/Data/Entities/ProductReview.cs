@@ -9,7 +9,7 @@ namespace CarvedRock.Api.Data.Entities
         public Product Product { get; set; }
 
         [StringLength(200), Required]
-        public int Title { get; set; }
-        public int Review { get; set; }
+        public string Title { get; set; }
+        public string Review { get; set; }
     }
 }
