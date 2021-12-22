@@ -33,6 +33,8 @@ namespace CarvedRock.Api.GraphQL
             // Compare two products by using aliases { p10: product(id: 10) { name, price } p11: product(id: 11) { name, price } } 
             // Declare fragments to reduce typing queries, e.g.: fragment comparisonFields on ProductType { name, price, stock }
             //  and then { p10: product(id: 10) { ...comparisonFields } p11: product(id: 11) { ...comparisonFields } }
+            //
+            // Name queries to be able to perform multiple queries, e.g.: query all { products { name price } } query p10 { ... } }
             Field<ProductType>(
                 "product",
                 arguments: new QueryArguments(new QueryArgument<NonNullGraphType<IdGraphType>>
