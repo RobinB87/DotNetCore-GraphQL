@@ -37,8 +37,12 @@ namespace CarvedRock.Api
             services.AddScoped<CarvedRockSchema>();
 
             // AddGraphTypes scans assembly for all GraphTypes and registers them automatically
+            // AddDataLoader: the first time reviews are needed for specific product, the reviews for all products are fetched.
+            //  These are stored in cache owned by data loader
+            //  For the next products, these will be fetched from the cache
             services.AddGraphQL(o => { o.ExposeExceptions = false; })
-                .AddGraphTypes(ServiceLifetime.Scoped);
+                .AddGraphTypes(ServiceLifetime.Scoped)
+                .AddDataLoader();
         }
 
         public void Configure(IApplicationBuilder app, CarvedRockDbContext dbContext)
