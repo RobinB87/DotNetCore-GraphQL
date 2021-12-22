@@ -15,7 +15,7 @@ namespace CarvedRock.Api.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -35,7 +35,8 @@ namespace CarvedRock.Api.Data.Migrations
                     b.Property<string>("PhotoFileName")
                         .HasMaxLength(100);
 
-                    b.Property<decimal>("Price");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Rating");
 

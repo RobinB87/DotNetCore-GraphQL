@@ -17,7 +17,7 @@ namespace CarvedRock.Api.Data.Migrations
                     Name = table.Column<string>(maxLength: 100, nullable: true),
                     Type = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: true),
-                    Price = table.Column<decimal>(nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Stock = table.Column<int>(nullable: false),
                     Rating = table.Column<int>(nullable: false),
                     IntroducedAt = table.Column<DateTimeOffset>(nullable: false),
