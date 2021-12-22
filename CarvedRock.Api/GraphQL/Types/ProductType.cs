@@ -8,6 +8,9 @@ namespace CarvedRock.Api.GraphQL.Types
 {
     public class ProductType : ObjectGraphType<Product>
     {
+        // In real world apps products can have all kinds of properties (e.g. kayak has a length and a boot a size)
+        // Each product will then get its own type.
+        // Then interfaces can be used (e.g. product interface) which would define the common props for all products (interface polymorphism). 
         public ProductType(ProductReviewRepository reviewRepository,
             IDataLoaderContextAccessor dataLoaderContextAccessor)
         {
