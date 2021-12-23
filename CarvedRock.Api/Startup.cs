@@ -35,8 +35,7 @@ namespace CarvedRock.Api
                 new FuncDependencyResolver(s.GetRequiredService));
 
             services.AddScoped<CarvedRockSchema>();
-
-
+            services.AddSingleton<ReviewMessageService>();
 
             services.AddGraphQL(o => { o.ExposeExceptions = false; })
                 // AddGraphTypes scans assembly for all GraphTypes and registers them automatically
@@ -44,14 +43,25 @@ namespace CarvedRock.Api
                 // To get the claims principal object - which represents the user in ASPNETCORE use AddUserContextBuilder
                 // Whenever user context is needed somewhere in graphtype, this lambda will be executed
                 .AddUserContextBuilder(context => context.User)
-                .AddDataLoader();
                 // AddDataLoader: the first time reviews are needed for specific product, the reviews for all products are fetched.
                 //  These are stored in cache owned by data loader
                 //  For the next products, these will be fetched from the cache
+                .AddDataLoader()
+                // Add websockets
+                .AddWebSockets();
+
+            services.AddCors();
         }
 
         public void Configure(IApplicationBuilder app, CarvedRockDbContext dbContext)
         {
+            app.UseCors(builder => 
+                builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+            // Add the websockets middleware and endpoint
+            app.UseWebSockets();
+            app.UseGraphQLWebSockets<CarvedRockSchema>("/graphql");
+
             app.UseGraphQL<CarvedRockSchema>();
             app.UseGraphQLPlayground(new GraphQLPlaygroundOptions());
             dbContext.Seed();
