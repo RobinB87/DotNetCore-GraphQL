@@ -31,5 +31,12 @@ namespace CarvedRock.Api.Repositories
             // So, e.g. one product can have multiple reviews
             return reviews.ToLookup(r => r.ProductId);
         }
+
+        public async Task<ProductReview> AddReview(ProductReview review)
+        {
+            _dbContext.ProductReviews.Add(review);
+            await _dbContext.SaveChangesAsync();
+            return review;
+        }
     }
 }
