@@ -27,6 +27,8 @@ namespace CarvedRock.Web.Controllers
 
         public async Task<IActionResult> ProductDetail(int productId)
         {
+            // Final step: call the SubscribeToUpdates method, for example when the product detail method is called
+            await _productGraphClient.SubscribeToUpdates();
             var product = await _productGraphClient.GetProduct(productId);
             return View(product);
         }
